@@ -50,7 +50,10 @@ export function getPlayerMove() {
 }
 
 /** Should return an outcome. Either "WIN", "LOSS" or "DRAW" */
-export function getOutcomeForRound(playerChoice, computerChoice) {
+export function getOutcomeForRound(
+  playerChoice: string,
+  computerChoice: string
+) {
   const playerHasDrawn = playerChoice === computerChoice;
 
   if (playerHasDrawn) {
@@ -58,9 +61,12 @@ export function getOutcomeForRound(playerChoice, computerChoice) {
   }
 
   const playerHasWon =
-    (playerChoice === CHOICE_PAPER && computerChoice === CHOICE_ROCK) ||
-    (playerChoice === CHOICE_SCISSORS && computerChoice === CHOICE_PAPER) ||
-    (playerChoice === CHOICE_ROCK && computerChoice === CHOICE_SCISSORS);
+    (playerChoice === CHOICE_PAPER &&
+      computerChoice === CHOICE_ROCK) ||
+    (playerChoice === CHOICE_SCISSORS &&
+      computerChoice === CHOICE_PAPER) ||
+    (playerChoice === CHOICE_ROCK &&
+      computerChoice === CHOICE_SCISSORS);
 
   if (playerHasWon) {
     return OUTCOME_WIN;
@@ -106,7 +112,14 @@ export function playGame() {
   }
 }
 
-export function updateModel(model, dataForRound) {
+export function updateModel(
+  model: { playerScore: number; computerScore: number },
+  dataForRound: {
+    playerMove: string;
+    computerMove: string;
+    outcome: string;
+  }
+) {
   switch (dataForRound.outcome) {
     case OUTCOME_WIN:
       return { ...model, playerScore: model.playerScore + 1 };
@@ -117,7 +130,14 @@ export function updateModel(model, dataForRound) {
   }
 }
 
-export function showProgressInConsole(dataForRound, model) {
+export function showProgressInConsole(
+  dataForRound: {
+    playerMove: string;
+    computerMove: string;
+    outcome: string;
+  },
+  model: { playerScore: number; computerScore: number }
+) {
   console.table([
     {
       "Your choice": dataForRound.playerMove,
